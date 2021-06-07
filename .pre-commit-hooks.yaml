@@ -191,3 +191,10 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: check-db-delimiter
+    name: Check DB Delimiter
+    description: This hook checkes DB delimiter
+    entry: check-db-delimiter
+    language: python
+    types: [python]
+    stages: [commit]
