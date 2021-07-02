@@ -13,13 +13,29 @@ def is_tdw_script(contents: str):
 
 
 def check_delimiter(contents: str):
-    start_index = contents.find("main_sql")
-    end_index = contents.find(".format(target_tb=target_tb, iDate=iDate)")
-    main_sql_string = contents[start_index:end_index]
-    results = DELIMITER_PATTERN.findall(main_sql_string)
-    if len(results) > 0:
-        for line in results:
+    re_groups = [m for m in re.finditer(r'"""', contents)]
+    if len(re_groups) % 2 != 0:
+        print(f'"""分割符不匹配')
+
+    db_delimiters = []
+    replaceable_dates = []
+    for i in range(0, len(re_groups), 2):
+        start_index = re_groups[i].start()
+        end_index = re_groups[i+1].end()
+        sql_string = contents[start_index:end_index]
+        # 数据库分割符
+        results = DELIMITER_PATTERN.findall(sql_string)
+        # 日期未替换
+        dates = re.findall(r"202\d{5,7}", sql_string)
+        db_delimiters.extend(results)
+        replaceable_dates.extend(dates)
+
+    if len(db_delimiters) > 0:
+        for line in db_delimiters:
             print(f"Find INVALID delimiter: {line}")
+        return 1
+    if replaceable_dates:
+        print(f"Find Replaceable dates: {replaceable_dates}")
         return 1
     return 0
 
