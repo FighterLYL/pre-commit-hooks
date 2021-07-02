@@ -26,7 +26,7 @@ def check_delimiter(contents: str):
         # 数据库分割符
         results = DELIMITER_PATTERN.findall(sql_string)
         # 日期未替换
-        dates = re.findall(r"202\d{5,7}", sql_string)
+        dates = re.findall(r"\b202\d{5,7}\b", sql_string)
         db_delimiters.extend(results)
         replaceable_dates.extend(dates)
 

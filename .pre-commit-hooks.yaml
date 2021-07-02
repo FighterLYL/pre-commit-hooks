@@ -192,7 +192,7 @@
     types: [text]
     stages: [commit, push, manual]
 -   id: check-db-delimiter
-    name: Check DB Delimiter
+    name: 检查数据库分割符&未替换日期
     description: This hook checkes DB delimiter
     entry: check-db-delimiter
     language: python
