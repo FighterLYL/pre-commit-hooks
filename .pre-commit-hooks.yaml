@@ -198,3 +198,9 @@
     language: python
     types: [python]
     stages: [commit]
+-   id: separate-sql-files-commit
+    name: SQL文件单独提交
+    description: SQL文件单独提交
+    entry: separate-sql-files-commit
+    language: python
+    stages: [ commit ]
